@@ -1,0 +1,759 @@
+
+.   replace qn9=0 if qn6 ==2  
+(16,547 real changes made)
+
+.   replace qn38=0 if qn35==2  
+(18,397 real changes made)
+
+.   replace qn40=0 if qn38==0  
+(19,622 real changes made)
+
+.   replace qn53=0 if qn51==2  
+(18,890 real changes made)
+
+.   replace qn54=0 if qn53==0  
+(19,561 real changes made)
+
+.   replace qn64=0 if qn62==2  
+(19,125 real changes made)
+
+.   replace qn69=0 if qn67==2  
+(19,151 real changes made)
+
+.   replace qn74=0 if qn73==2  
+(19,283 real changes made)
+
+.   replace qn76=0 if qn75==2  
+(19,453 real changes made)
+
+.   replace qn78=0 if qn77==2  
+(19,406 real changes made)
+
+.   replace qn80=0 if qn79==2  
+(19,534 real changes made)
+
+.   replace qn82=0 if qn81==2  
+(19,460 real changes made)
+
+.   replace qn85=0 if qn84==2  
+(18,218 real changes made)
+
+.   replace qn88=0 if qn87==2  
+(18,772 real changes made)
+
+.   replace qn89=0 if qn9==0 & qn38==0 & qn53==0 & qn64==0 & qn69==0 & qn74==0 & qn76==0 & qn78==0 & qn80==0 & qn82==0 & qn85==0 & qn88==0 
+(17,653 real changes made)
+
+.   
+.   
+. *E-cigarette TOBACCO MARKETING (excluding social media) vs. PERCEIVED ADDICTION RELATIVE TO CIGARETTES
+.  keep qn4a qn4b qn5b qn9 qn38 qn40 qn53 qn54 qn64 qn69 qn74 qn76 qn78 qn80 qn82 qn85 qn88 qn89 finwgt psu2 v_stratum2 qn128 qn129 qn130 qn131 qn132 qn134 
+
+.  *Getting rid of missing values in the dependent variables
+.   drop if qn9==. |  qn38==. |  qn40==. |  qn53==. |  qn54==. |  qn64==. |  qn69==. |  qn74==. |  qn76==. |  qn78==. |  qn80==. |  qn82==. |  qn85==. |  qn88==. |  qn89==.  
+(1,427 observations deleted)
+
+.  *Getting rid of missing values in the independent variables
+.   drop if  qn128==. |  qn129==. |  qn130==. |  qn131 ==. |   qn132==. |  qn134==.
+(2,883 observations deleted)
+
+.  
+.  /*Keeping only the persons who answers more than 0 for "QN89: During the past 30 days, on how many days did you use any tobacco product(s)?*/
+. *keep if qn89 > 0
+. /*Slecting people that uses at least 2 products*/
+. /*Notice qn40 is not in the list in email Wednesday, February 1, 2023 9:10 AM*/
+. gen      qn9bin=0 if qn9==0 
+(860 missing values generated)
+
+. replace  qn9bin=1 if qn9>0
+(860 real changes made)
+
+. gen      qn38bin=0 if qn38==0 
+(220 missing values generated)
+
+. replace  qn38bin=1 if qn38>0
+(220 real changes made)
+
+. gen      qn53bin=0 if qn53==0 
+(184 missing values generated)
+
+. replace  qn53bin=1 if qn53>0
+(184 real changes made)
+
+. gen      qn64bin=0 if qn64==0 
+(99 missing values generated)
+
+. replace  qn64bin=1 if qn64>0
+(99 real changes made)
+
+. gen      qn69bin=0 if qn69==0 
+(93 missing values generated)
+
+. replace  qn69bin=1 if qn69>0
+(93 real changes made)
+
+. gen      qn74bin=0 if qn74==0 
+(68 missing values generated)
+
+. replace  qn74bin=1 if qn74>0
+(68 real changes made)
+
+. gen      qn76bin=0 if qn76==0 
+(45 missing values generated)
+
+. replace  qn76bin=1 if qn76>0
+(45 real changes made)
+
+. gen      qn78bin=0 if qn78==0 
+(46 missing values generated)
+
+. replace  qn78bin=1 if qn78>0
+(46 real changes made)
+
+. gen      qn80bin=0 if qn80==0 
+(22 missing values generated)
+
+. replace  qn80bin=1 if qn80>0
+(22 real changes made)
+
+. gen      qn82bin=0 if qn82==0 
+(42 missing values generated)
+
+. replace  qn82bin=1 if qn82>0
+(42 real changes made)
+
+. gen      qn85bin=0 if qn85==0 
+(88 missing values generated)
+
+. replace  qn85bin=1 if qn85>0
+(88 real changes made)
+
+. gen      qn88bin=0 if qn88==0 
+(86 missing values generated)
+
+. replace  qn88bin=1 if qn88>0
+(86 real changes made)
+
+. 
+. gen number_of_products= qn9bin + qn38bin + qn53bin + qn64bin + qn69bin + qn74bin + qn76bin + qn78bin + qn80bin + qn82bin + qn85bin + qn88bin
+
+. *keep if number_of_products >= 2
+.  keep if qn5b==1
+(14,953 observations deleted)
+
+.  
+. canon (qn9 qn38 qn40 qn53 qn54 qn64 qn69 qn74 qn76 qn78 qn80 qn82 qn85 qn88 qn89) (qn128 qn129 qn130 qn131 qn132 qn134) [weight=finwgt]
+(analytic weights assumed)
+
+Canonical correlation analysis                      Number of obs =       1150
+
+Raw coefficients for the first variable set
+
+                 |        1         2         3         4         5         6 
+    -------------+------------------------------------------------------------
+             qn9 |  -0.1288    0.0723    0.3493   -0.3416    0.3559    0.5840 
+            qn38 |   3.0330   -5.1299   -1.2014   -4.1032   -1.2012   -1.6858 
+            qn40 |  -4.4884    7.0835    4.5750   10.2652    3.4092   -2.6987 
+            qn53 |   3.3551   -2.5205   -0.6950   -2.8340   -1.7706   -3.1491 
+            qn54 | -19.3886   28.3293    4.7526   22.0935   10.6266   15.6064 
+            qn64 |  -0.1159    0.5863    1.1594    3.4545   -1.2585   -0.2683 
+            qn69 |   0.3134  -11.7455   -3.3074   16.7327   -1.1657   15.0176 
+            qn74 |   5.5239   -1.0691   -0.3814    4.7404    7.5716    5.8958 
+            qn76 | -19.0665   60.9946   25.1156  -32.6883   -3.7654  -37.1978 
+            qn78 |   1.4113   -1.3128    0.7716   -7.8060    1.2710    1.6235 
+            qn80 |  26.7793  -69.9238  -28.7839    2.9077   -9.0414    2.5667 
+            qn82 | -15.5510   22.8622    8.2494   13.8847    6.1158   14.2269 
+            qn85 |   0.1432    0.6987   -0.3272   -0.1036   -0.1590    0.4199 
+            qn88 |  -1.1360   -0.4259   -1.9883   -0.4170    1.6487   -0.3330 
+            qn89 |   0.1233   -0.0586   -0.3432    0.2909   -0.2595   -0.6160 
+    --------------------------------------------------------------------------
+
+Raw coefficients for the second variable set
+
+                 |        1         2         3         4         5         6 
+    -------------+------------------------------------------------------------
+           qn128 |   0.7901   -0.6647    0.3891    0.1067    0.4952   -0.0160 
+           qn129 |  -0.1017   -0.2871   -0.6686    0.0084    0.0579    0.5550 
+           qn130 |   0.2470    0.5487   -0.4969    0.2336    0.2087   -0.3761 
+           qn131 |  -0.7259    0.0351    0.0635   -0.6944    0.6122   -0.2882 
+           qn132 |  -0.4384   -0.2083    0.2757    0.8841   -0.1195   -0.0401 
+           qn134 |   0.0334    0.5076    0.2917   -0.1144    0.0144    0.6260 
+    --------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+Canonical correlations:
+  0.1939  0.1741  0.1487  0.1186  0.1063  0.0876
+
+----------------------------------------------------------------------------
+Tests of significance of all canonical correlations
+
+                         Statistic      df1      df2            F     Prob>F
+         Wilks' lambda     .882761       90  6355.67       1.5834     0.0004 a
+        Pillai's trace     .123065       90     6804       1.5831     0.0004 a
+Lawley-Hotelling trace      .12637       90     6764       1.5829     0.0004 a
+    Roy's largest root     .039053       15     1134       2.9524     0.0001 u
+----------------------------------------------------------------------------
+                            e = exact, a = approximate, u = upper bound on F
+
+.  
+.  mkmat qn9 qn38 qn40 qn53 qn54 qn64 qn69 qn74 qn76 qn78 qn80 qn82 qn85 qn88 qn89, matrix(OgX) 
+
+.  mkmat qn128 qn129 qn130 qn131 qn132 qn134, matrix(OgY) 
+
+.  mkmat finwgt, matrix(W) 
+
+. /*Creating diagonal matrix with the survey Weights*/
+. matrix diag_W = I(rowsof(OgX))
+
+. local n_f =rowsof(OgX)
+
+. forvalues i = 1/`n_f' {
+  2.                  matrix diag_W [`i',`i']=  W[`i',1]
+  3. }
+
+. /*
+>  From "stata canon.pdf" in the "Stored results" section:
+> e(rawcoef_var1): raw coefficients for varlist1
+> e(rawcoef_var2): raw coefficients for varlist2
+>  */
+.  matrix list e(rawcoef_var1)
+
+e(rawcoef_var1)[15,6]
+               1           2           3           4           5           6
+ qn9  -.12882957     .072276   .34933236  -.34157902   .35587539   .58399307
+qn38   3.0330164  -5.1299159  -1.2013997  -4.1032463  -1.2011546  -1.6858218
+qn40  -4.4884046   7.0834524   4.5750215   10.265172   3.4091951  -2.6987466
+qn53   3.3550688  -2.5205327  -.69495135  -2.8340227  -1.7706439  -3.1490541
+qn54  -19.388628   28.329307   4.7526235   22.093523   10.626581   15.606355
+qn64  -.11592284   .58629022   1.1593763   3.4544637   -1.258473  -.26829049
+qn69   .31335863  -11.745459  -3.3074346   16.732712  -1.1657045   15.017636
+qn74   5.5238603  -1.0691009  -.38137742   4.7403765   7.5715621   5.8957783
+qn76  -19.066502    60.99464    25.11562  -32.688327  -3.7654171   -37.19782
+qn78    1.411291  -1.3127501   .77157719  -7.8059635   1.2709556   1.6234514
+qn80   26.779305  -69.923756  -28.783855   2.9076698  -9.0413672   2.5667221
+qn82  -15.551027   22.862172   8.2493675   13.884662   6.1158054   14.226914
+qn85   .14318725   .69871061  -.32722184  -.10364966  -.15897745   .41990891
+qn88  -1.1359806  -.42590817  -1.9882647  -.41695109   1.6486845  -.33303072
+qn89   .12331873   -.0585851  -.34319988   .29086478  -.25952855  -.61601811
+
+.  matrix list e(rawcoef_var2)
+
+e(rawcoef_var2)[6,6]
+                1           2           3           4           5           6
+qn128   .79010625  -.66469268   .38911943   .10674939   .49518727  -.01597552
+qn129  -.10172193  -.28711013  -.66857707   .00836534   .05786805   .55500533
+qn130   .24700657   .54873828  -.49687314   .23362222    .2086872  -.37606348
+qn131  -.72593567   .03510398   .06354405  -.69443168   .61215824  -.28822415
+qn132  -.43837903  -.20828719   .27573831   .88414309  -.11953946   -.0401081
+qn134   .03342772   .50763276   .29168479  -.11437925   .01439823    .6259787
+
+.  *Let's use the raw coeff, after all, all variables are in the same scale (?)
+.  matrix list e(stdcoef_var1)  
+
+e(stdcoef_var1)[15,6]
+               1           2           3           4           5           6
+ qn9  -.34999135   .19635224   .94903136  -.92796788   .96680681   1.5865342
+qn38   3.6660799  -6.2006526  -1.4521608  -4.9596925  -1.4518644  -2.0376934
+qn40  -.75357763   1.1892714   .76812012   1.7234641   .57238449  -.45310423
+qn53   2.0040627  -1.5055743  -.41511103  -1.6928294  -1.0576478  -1.8810052
+qn54  -2.1970526   3.2101797   .53855095    2.503562   1.2041676   1.7684585
+qn64  -.10556945   .53392701   1.0558292    3.145936  -1.1460753  -.24432872
+qn69   .14286237  -5.3548359  -1.5078823   7.6285593  -.53145276   6.8466441
+qn74   2.6600549  -.51483326  -.18365506   2.2827626   3.6461406   2.8391547
+qn76  -9.0653046   29.000338   11.941401  -15.541899  -1.7902945   -17.68597
+qn78   .86431339  -.80396422   .47253507  -4.7805865   .77836811   .99424626
+qn80   13.396285  -34.979197  -14.399057   1.4545551   -4.522923   1.2839968
+qn82  -8.6584881   12.729182   4.5930761   7.7306911   3.4051532   7.9212498
+qn85   .14222246   .69400275  -.32501704  -.10295127  -.15790627    .4170796
+qn88  -.74892017  -.28078932  -1.3108072  -.27488417   1.0869315  -.21955782
+qn89   .34543266  -.16410487  -.96134985   .81475208  -.72697501  -1.7255511
+
+.  matrix list e(stdcoef_var2)   
+
+e(stdcoef_var2)[6,6]
+                1           2           3           4           5           6
+qn128   .76225913  -.64126574     .375405   .10298704   .47773451  -.01541246
+qn129  -.11552714  -.32607535  -.75931317   .00950065   .06572163   .63032801
+qn130   .30475526   .67703006  -.61303915   .28824173   .25747703  -.46398491
+qn131   -.7030969   .03399957   .06154488  -.67258406   .59289904  -.27915628
+qn132  -.48591387  -.23087243    .3056375   .98001355  -.13250151  -.04445715
+qn134   .04342616   .65946879   .37892947  -.14859077   .01870483   .81321272
+
+. 
+.  mata
+------------------------------------------------- mata (type end to exit) ----------------------------------------------------------------------------------------------------------------------------------
+:     myrawcoef_var1=st_matrix("e(rawcoef_var1)")
+
+:         myrawcoef_var2=st_matrix("e(rawcoef_var2)")
+
+: /*The matrices X and Y are calculated in Stata so they should still be available*/      
+:         myOgX=st_matrix("OgX")
+
+:         myOgY=st_matrix("OgY")
+
+:     mydiag_W=st_matrix("diag_W")
+
+:         U=myOgX*myrawcoef_var1
+
+:         V=myOgY*myrawcoef_var2
+
+:         
+:         /*Now U and V are not complex matrices*/
+:         st_matrix("OGStataU", U)
+
+:         st_matrix("OGStataV", V)
+
+:         
+:         /*Using Eq. (8) and (9) to find the correlations and variances of the canonical matrices*/
+:         /*This calculations do not lead to correct canonical correlations or variances of the canonical variates as it did when using all my process above*/
+:         weighted_varU= 97* J(1, cols(U), 1)
+
+:         weighted_varV= 98*J(1, cols(V), 1)
+
+:         weighted_rho=  99*J(1, cols(U), 1)
+
+:         for (i=1; i<=cols(U); i++) {
+>                 meanU=mean(U[,i])
+>                 meanV=mean(V[,i])
+>                 for (j=1; j<=rows(U); j++) {
+>                         U[j,i]=U[j,i]-meanU
+>                         V[j,i]=V[j,i]-meanV
+>                 }/*end for j*/
+>         /*Now the means should be zero*/
+>                 meanU=mean(U[,i])
+>                 meanU
+>                 meanV=mean(V[,i])
+>                 meanV
+>                 weighted_varU[1,i]=(U'[i,])*mydiag_W*(U[,i])/trace(mydiag_W)
+>                 weighted_varV[1,i]=(V'[i,])*mydiag_W*(V[,i])/trace(mydiag_W)
+>                 weighted_rho[1,i]=((U'[i,])*mydiag_W*(V[,i])/trace(mydiag_W))/sqrt(weighted_varU[1,i]*weighted_varV[1,i])
+>            
+>         }/*end for loop*/
+  3.66856e-18
+  2.43766e-17
+  1.97909e-18
+  -5.58732e-18
+  -1.81015e-20
+  -1.78963e-17
+  -7.81983e-18
+  -8.97833e-18
+  3.11345e-18
+  2.02736e-16
+  -1.25503e-18
+  -7.53021e-18
+
+:         /*Notice that in this case the variances are (approximately) equal to 1 because with out normalization of the eigen values the constrain used during the calculation of the caonical correlations 
+> holds*/
+:     /*Now the means are zero and variances are 1 because they have been standarized*/
+:         weighted_varU
+                 1             2             3             4             5             6
+    +-------------------------------------------------------------------------------------+
+  1 |  1.000816948   1.002130903   .9993714724   .9991332294   .9992937479    1.00290764  |
+    +-------------------------------------------------------------------------------------+
+
+:         weighted_varV
+                 1             2             3             4             5             6
+    +-------------------------------------------------------------------------------------+
+  1 |  1.001662475   .9991378549   .9991330411   .9991567645   .9992044033   .9998035614  |
+    +-------------------------------------------------------------------------------------+
+
+: /*The final correlation is equal to what we got form svy: regress*/
+:         weighted_rho
+                 1             2             3             4             5             6
+    +-------------------------------------------------------------------------------------+
+  1 |  .1913967505   .1740050998   .1486772783   .1186090331   .1061825278   .0858377225  |
+    +-------------------------------------------------------------------------------------+
+
+: end 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. 
+. /*matrix list StataU*/
+. svmat OGStataU
+
+. svmat OGStataV
+
+. /*Notice that the mean zero and std. dev. 1 of the canonical variates means that the regression coefficients are eqaul to them!!!:-)*/
+. svyset  [pweight=finwgt],
+
+Sampling weights: finwgt
+             VCE: linearized
+     Single unit: missing
+        Strata 1: <one>
+ Sampling unit 1: <observations>
+           FPC 1: <zero>
+
+. svy: regress OGStataU1  OGStataV1   
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =     1                           Number of obs   =     1,150
+Number of PSUs   = 1,150                           Population size = 1,822,647
+                                                   Design df       =     1,149
+                                                   F(1, 1149)      =      2.46
+                                                   Prob > F        =    0.1171
+                                                   R-squared       =    0.0376
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU1 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV1 |   .1938691   .1236193     1.57   0.117    -.0486757    .4364139
+       _cons |   .0376755    .045822     0.82   0.411    -.0522287    .1275797
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU2  OGStataV2   
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =     1                           Number of obs   =     1,150
+Number of PSUs   = 1,150                           Population size = 1,822,647
+                                                   Design df       =     1,149
+                                                   F(1, 1149)      =      3.68
+                                                   Prob > F        =    0.0553
+                                                   R-squared       =    0.0303
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU2 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV2 |   .1741175   .0907471     1.92   0.055    -.0039311     .352166
+       _cons |   .0292676   .0334135     0.88   0.381    -.0362908    .0948259
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU3  OGStataV3
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =     1                           Number of obs   =     1,150
+Number of PSUs   = 1,150                           Population size = 1,822,647
+                                                   Design df       =     1,149
+                                                   F(1, 1149)      =      4.11
+                                                   Prob > F        =    0.0430
+                                                   R-squared       =    0.0221
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU3 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV3 |   .1487205   .0733917     2.03   0.043     .0047237    .2927172
+       _cons |   .0083599   .0311008     0.27   0.788    -.0526609    .0693807
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU4  OGStataV4  
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =     1                           Number of obs   =     1,150
+Number of PSUs   = 1,150                           Population size = 1,822,647
+                                                   Design df       =     1,149
+                                                   F(1, 1149)      =      5.61
+                                                   Prob > F        =    0.0181
+                                                   R-squared       =    0.0141
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU4 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV4 |   .1186022    .050086     2.37   0.018     .0203318    .2168725
+       _cons |  -.2008272   .0793939    -2.53   0.012    -.3566004   -.0450539
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU5  OGStataV5   
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =     1                           Number of obs   =     1,150
+Number of PSUs   = 1,150                           Population size = 1,822,647
+                                                   Design df       =     1,149
+                                                   F(1, 1149)      =      5.49
+                                                   Prob > F        =    0.0193
+                                                   R-squared       =    0.0113
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU5 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV5 |   .1063051   .0453612     2.34   0.019     .0173051    .1953052
+       _cons |   -.295015   .1437423    -2.05   0.040    -.5770418   -.0129882
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU6  OGStataV6  
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =     1                           Number of obs   =     1,150
+Number of PSUs   = 1,150                           Population size = 1,822,647
+                                                   Design df       =     1,149
+                                                   F(1, 1149)      =      5.12
+                                                   Prob > F        =    0.0238
+                                                   R-squared       =    0.0077
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU6 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV6 |   .0876247   .0387107     2.26   0.024      .011673    .1635764
+       _cons |  -.0011708   .0310162    -0.04   0.970    -.0620255    .0596839
+------------------------------------------------------------------------------
+
+. 
+. /*Remember We don't get the same results if we just shift the variables!!!*/
+. /*Complex survey elements taken form  2021-NYTS-Codebook.pdf page 30 (33 of 41)*/
+. /*Notice that the mean zero and std. dev. 1 of the canonical variates means that the regression coefficients are eqaul to them!!!:-)*/
+. svyset  [pweight=finwgt], psu(psu2) strata(v_stratum2)
+
+Sampling weights: finwgt
+             VCE: linearized
+     Single unit: missing
+        Strata 1: v_stratum2
+ Sampling unit 1: psu2
+           FPC 1: <zero>
+
+. svy: regress OGStataU1  OGStataV1  
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata = 15                              Number of obs   =     1,150
+Number of PSUs   = 91                              Population size = 1,822,647
+                                                   Design df       =        76
+                                                   F(1, 76)        =      2.28
+                                                   Prob > F        =    0.1350
+                                                   R-squared       =    0.0376
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU1 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV1 |   .1938691   .1283105     1.51   0.135    -.0616835    .4494216
+       _cons |   .0376755    .048542     0.78   0.440    -.0590042    .1343552
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU2  OGStataV2  
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata = 15                              Number of obs   =     1,150
+Number of PSUs   = 91                              Population size = 1,822,647
+                                                   Design df       =        76
+                                                   F(1, 76)        =      3.48
+                                                   Prob > F        =    0.0660
+                                                   R-squared       =    0.0303
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU2 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV2 |   .1741175   .0933387     1.87   0.066    -.0117827    .3600177
+       _cons |   .0292676   .0343964     0.85   0.398    -.0392388    .0977739
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU3  OGStataV3
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata = 15                              Number of obs   =     1,150
+Number of PSUs   = 91                              Population size = 1,822,647
+                                                   Design df       =        76
+                                                   F(1, 76)        =      4.09
+                                                   Prob > F        =    0.0467
+                                                   R-squared       =    0.0221
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU3 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV3 |   .1487205   .0735558     2.02   0.047     .0022215    .2952195
+       _cons |   .0083599   .0285739     0.29   0.771    -.0485499    .0652696
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU4  OGStataV4  
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata = 15                              Number of obs   =     1,150
+Number of PSUs   = 91                              Population size = 1,822,647
+                                                   Design df       =        76
+                                                   F(1, 76)        =      5.52
+                                                   Prob > F        =    0.0214
+                                                   R-squared       =    0.0141
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU4 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV4 |   .1186022   .0504727     2.35   0.021      .018077    .2191274
+       _cons |  -.2008272   .0786287    -2.55   0.013    -.3574298   -.0442245
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU5  OGStataV5   
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata = 15                              Number of obs   =     1,150
+Number of PSUs   = 91                              Population size = 1,822,647
+                                                   Design df       =        76
+                                                   F(1, 76)        =      5.23
+                                                   Prob > F        =    0.0250
+                                                   R-squared       =    0.0113
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU5 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV5 |   .1063051   .0465046     2.29   0.025     .0136833     .198927
+       _cons |   -.295015    .146664    -2.01   0.048    -.5871216   -.0029084
+------------------------------------------------------------------------------
+
+. svy: regress OGStataU6  OGStataV6  
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata = 15                              Number of obs   =     1,150
+Number of PSUs   = 91                              Population size = 1,822,647
+                                                   Design df       =        76
+                                                   F(1, 76)        =      6.15
+                                                   Prob > F        =    0.0154
+                                                   R-squared       =    0.0077
+
+------------------------------------------------------------------------------
+             |             Linearized
+   OGStataU6 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   OGStataV6 |   .0876247   .0353365     2.48   0.015     .0172459    .1580035
+       _cons |  -.0011708   .0333587    -0.04   0.972    -.0676104    .0652689
+------------------------------------------------------------------------------
+
+. 
+. /*-----------------Calculating other Statistics (more than anything to make sure that we get the same results as in SAS)---------------*/
+. egen z2qn9 = std(qn9)
+
+. egen z2qn38 = std(qn38) 
+
+. egen z2qn40 = std(qn40)
+
+. egen z2qn53 = std(qn53) 
+
+. egen z2qn54 = std(qn54)
+
+. egen z2qn64 = std(qn64) 
+
+. egen z2qn69 = std(qn69)
+
+. egen z2qn74 = std(qn74) 
+
+. egen z2qn76 = std(qn76)
+
+. egen z2qn78 = std(qn78) 
+
+. egen z2qn80 = std(qn80)
+
+. egen z2qn82 = std(qn80) 
+
+. egen z2qn85 = std(qn85)
+
+. egen z2qn88 = std(qn88) 
+
+. egen z2qn89 = std(qn89) 
+
+. 
+. egen z2qn128 = std(qn128)
+
+. egen z2qn129 = std(qn129) 
+
+. egen z2qn130 = std(qn130)
+
+. egen z2qn131 = std(qn131)
+
+. egen z2qn132 = std(qn132)
+
+. egen z2qn134 = std(qn134)
+
+. 
+. *Not standarizing we don't get the correct canonical correlations
+. mkmat z2qn9 z2qn38 z2qn40 z2qn53 z2qn54 z2qn64 z2qn69 z2qn74 z2qn76 z2qn78 z2qn80 z2qn82 z2qn85 z2qn88 z2qn89, matrix(X)
+
+. mkmat z2qn128 z2qn129 z2qn130 z2qn131 z2qn132 z2qn134, matrix(Y) 
+
+. 
+. mata
+------------------------------------------------- mata (type end to exit) ----------------------------------------------------------------------------------------------------------------------------------
+:     trace(mydiag_W)
+  1822646.661
+
+:         myX=st_matrix("X")
+
+:         myY=st_matrix("Y")
+
+: 
+:     Lambda= J(1,cols(weighted_rho),1)
+
+:         df= J(1,cols(weighted_rho),1)
+
+:         ChiSq_Wilks_Lambda=J(1,cols(weighted_rho),1)
+
+:         p_val_Wilks_Lambda=J(1,cols(weighted_rho),1)
+
+:         /*p_val_Wilks_LambdaFREQ=J(1,cols(weighted_rho),1)*/
+:         
+:         for (i=1; i<=cols(weighted_rho); i++) {
+>            Lambda[1,i]=(1-(weighted_rho[1,i]^2))
+>        for (j=(i+1); j<=cols(weighted_rho); j++) {
+>                         Lambda[1,i]=Lambda[1,i]*(1-(weighted_rho[1,j]^2))
+>                 }/*end for j*/
+>            df[1,i]=(cols(myX)+1-i)*(cols(myY)+1-i)
+>            ChiSq_Wilks_Lambda[1,i]=(((rows(myX)-1)-.5*(cols(myX)+cols(myY)+1))*ln(Lambda[1,i]))*-1
+>            p_val_Wilks_Lambda[1,i]=chi2tail(df[1,i], ChiSq_Wilks_Lambda[1,i])
+> /*===== NOT WORKING the DF in SAS variafrom CC to CC while I always use trace(diagW)=========================================*/
+>           /* p_val_Wilks_LambdaFREQ[1,i]=chi2tail(trace(mydiag_W), ChiSq_Wilks_Lambda[1,i])  */
+>         }/*end for loop*/
+
+:         /*Notice that in this case the variances are (approximately) equal to 1 because with out normalization of the eigen values the constrain used during the calculation of the caonical correlations 
+> holds*/
+: /*The final correlation is equal to what we got form svy: regress*/
+:         Lambda
+                 1             2             3             4             5             6
+    +-------------------------------------------------------------------------------------+
+  1 |  .8839796585   .9175936045     .94624376   .9676332277   .9814402297   .9926318854  |
+    +-------------------------------------------------------------------------------------+
+
+:         df
+        1    2    3    4    5    6
+    +-------------------------------+
+  1 |  90   70   52   36   22   10  |
+    +-------------------------------+
+
+:     ChiSq_Wilks_Lambda
+                 1             2             3             4             5             6
+    +-------------------------------------------------------------------------------------+
+  1 |  140.3395567   97.86877721   62.88026822   37.44265865   21.31947866   8.415957496  |
+    +-------------------------------------------------------------------------------------+
+
+:         p_val_Wilks_Lambda
+                 1             2             3             4             5             6
+    +-------------------------------------------------------------------------------------+
+  1 |  .0005455959   .0155966395   .1434851153   .4027592001   .5010758823   .5882760624  |
+    +-------------------------------------------------------------------------------------+
+
+:         /*.0415381409 vs 0.044,  .9582477164 vs 0.9592,  .8388719508  vs 0.839*/
+:         /*p_val_Wilks_LambdaFREQ*/
+:         /*  0 vs <.0001,   0  vs <.0001,  0  vs 0.0021  |*/
+: end 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. 
