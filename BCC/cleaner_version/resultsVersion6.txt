@@ -1,0 +1,192 @@
+.   canon (weight waist pulse) (chins situps jumps) [weight=weight]
+(analytic weights assumed)
+
+Canonical correlation analysis                      Number of obs =         20
+
+Raw coefficients for the first variable set
+
+                 |        1         2         3 
+    -------------+------------------------------
+          weight |   0.0300   -0.0792    0.0015 
+           waist |  -0.4564    0.4118   -0.1336 
+           pulse |   0.0124   -0.0125   -0.1498 
+    --------------------------------------------
+
+Raw coefficients for the second variable set
+
+                 |        1         2         3 
+    -------------+------------------------------
+           chins |   0.0710   -0.0438    0.2528 
+          situps |   0.0162   -0.0000   -0.0206 
+           jumps |  -0.0142    0.0223    0.0066 
+    --------------------------------------------
+
+----------------------------------------------------------------------------
+Canonical correlations:
+  0.8133  0.1938  0.0516
+
+----------------------------------------------------------------------------
+Tests of significance of all canonical correlations
+
+                         Statistic      df1      df2            F     Prob>F
+         Wilks' lambda     .325018        9  34.2229       2.2318     0.0440 a
+        Pillai's trace     .701606        9       48       1.6280     0.1341 a
+Lawley-Hotelling trace     1.99504        9       38       2.8078     0.0125 a
+    Roy's largest root     1.95337        3       16      10.4180     0.0005 u
+----------------------------------------------------------------------------
+                            e = exact, a = approximate, u = upper bound on F
+
+.   csdcanon
+=======Weighted Canonical Correlations=======
+                 1             2             3
+    +-------------------------------------------+
+  1 |  .8141326986   .1950129121    .051613125  |
+    +-------------------------------------------+
+=======Wilks' Lambda Statistic=======
+                 1             2             3
+    +-------------------------------------------+
+  1 |  .3235005995   .9594073582   .9973360853  |
+    +-------------------------------------------+
+=======Wilks' Lambda p-value (From Chi-Square instead of F distribution)=======
+                 1             2             3
+    +-------------------------------------------+
+  1 |  .0415381409   .9582477164   .8388719508  |
+    +-------------------------------------------+
+=======IAIN M. JOHNSTONE Approximation of Roy's Greatest Root Statistic/F-value=======
+                 1             2             3
+    +-------------------------------------------+
+  1 |  10.48376021   .2569677251   .0146906654  |
+    +-------------------------------------------+
+=======IAIN M. JOHNSTONE Approximation of Roy's Greatest p-value=======
+                 1             2             3
+    +-------------------------------------------+
+  1 |  .0004667007   .7772304894   .9854360153  |
+    +-------------------------------------------+
+=======SAS' Pillai's Trace Statistic/F-value=======
+  1.633808758
+=======SAS' Pillai's Trace p-value=======
+  .1324569442
+=======SAS' Hotelling-Lawley Trace  Statistic/F-value=======
+  2.991206843
+=======SAS' Hotelling-Lawley Trace  p-value=======
+  .0211499602
+
+Sampling weights: OGStataUVW7
+             VCE: linearized
+     Single unit: missing
+        Strata 1: <one>
+ Sampling unit 1: <observations>
+           FPC 1: <zero>
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =  1                                 Number of obs   =     20
+Number of PSUs   = 20                                 Population size =  3,572
+                                                      Design df       =     19
+                                                      F(1, 19)        =  14.16
+                                                      Prob > F        = 0.0013
+                                                      R-squared       = 0.6614
+
+------------------------------------------------------------------------------
+             |             Linearized
+ OGStataUVW1 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ OGStataUVW4 |   .8132676   .2161297     3.76   0.001     .3609028    1.265632
+       _cons |  -11.76822   .4972483   -23.67   0.000    -12.80897   -10.72746
+------------------------------------------------------------------------------
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =  1                                 Number of obs   =     20
+Number of PSUs   = 20                                 Population size =  3,572
+                                                      Design df       =     19
+                                                      F(1, 19)        =  53.89
+                                                      Prob > F        = 0.0000
+                                                      R-squared       = 0.6614
+
+------------------------------------------------------------------------------
+             |             Linearized
+ OGStataUVW4 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ OGStataUVW1 |   .8132674   .1107821     7.34   0.000     .5813979    1.045137
+       _cons |   10.23725   1.128697     9.07   0.000     7.874864    12.59965
+------------------------------------------------------------------------------
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =  1                                 Number of obs   =     20
+Number of PSUs   = 20                                 Population size =  3,572
+                                                      Design df       =     19
+                                                      F(1, 19)        =   1.36
+                                                      Prob > F        = 0.2578
+                                                      R-squared       = 0.0375
+
+------------------------------------------------------------------------------
+             |             Linearized
+ OGStataUVW2 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ OGStataUVW5 |   .1937568   .1660938     1.17   0.258    -.1538815     .541395
+       _cons |  -.5909963    .328225    -1.80   0.088    -1.277979    .0959865
+------------------------------------------------------------------------------
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =  1                                 Number of obs   =     20
+Number of PSUs   = 20                                 Population size =  3,572
+                                                      Design df       =     19
+                                                      F(1, 19)        =   0.70
+                                                      Prob > F        = 0.4125
+                                                      R-squared       = 0.0375
+
+------------------------------------------------------------------------------
+             |             Linearized
+ OGStataUVW5 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ OGStataUVW2 |   .1937568    .231226     0.84   0.412    -.2902048    .6777183
+       _cons |   1.202291   .2671732     4.50   0.000     .6430908    1.761491
+------------------------------------------------------------------------------
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =  1                                 Number of obs   =     20
+Number of PSUs   = 20                                 Population size =  3,572
+                                                      Design df       =     19
+                                                      F(1, 19)        =   0.06
+                                                      Prob > F        = 0.8097
+                                                      R-squared       = 0.0027
+
+------------------------------------------------------------------------------
+             |             Linearized
+ OGStataUVW3 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ OGStataUVW6 |   .0515741   .2112428     0.24   0.810    -.3905621    .4937103
+       _cons |  -12.84015   .2259692   -56.82   0.000    -13.31311   -12.36719
+------------------------------------------------------------------------------
+(running regress on estimation sample)
+
+Survey: Linear regression
+
+Number of strata =  1                                 Number of obs   =     20
+Number of PSUs   = 20                                 Population size =  3,572
+                                                      Design df       =     19
+                                                      F(1, 19)        =   0.06
+                                                      Prob > F        = 0.8072
+                                                      R-squared       = 0.0027
+
+------------------------------------------------------------------------------
+             |             Linearized
+ OGStataUVW6 | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ OGStataUVW3 |   .0515741   .2083809     0.25   0.807     -.384572    .4877203
+       _cons |   .5256448   2.745746     0.19   0.850    -5.221267    6.272556
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. 

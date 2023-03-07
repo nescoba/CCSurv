@@ -150,9 +150,9 @@ coef_u3_v3 <- coef(summary(fit_u3_v3))
 rawcoef_var3 <- coef_u3_v3[1:2, ]
 
 # Calculate the canonical variates in R
-canon_variates <- cancor(fit[, c("Weight", "Waist", "Pulse")], fit[, c("Chins", "Situps", "Jumps")], weights = fit$Weight)$cor
+# canon_variates <- cancor(fit[, c("Weight", "Waist", "Pulse")], fit[, c("Chins", "Situps", "Jumps")], weights = fit$Weight)$cor
 
-canon_variates$cor
+# canon_variates$cor
 
 U <- X %*% rawcoef_var1
 V <- Y %*% rawcoef_var2
