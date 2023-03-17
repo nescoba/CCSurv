@@ -96,9 +96,14 @@ calcpval <- function(OgX, OgY, X, Y, diag_W, W, N, rawcoef_var1, rawcoef_var2) {
 
     for (i in 1:length(weighted_rho)) {
         Lambda[i] <- (1 - (weighted_rho[i]^2))
-        for (j in (i + 1):length(weighted_rho)) {
-            Lambda[i] <- Lambda[i] * (1 - (weighted_rho[j]^2))
+        if (i < length(weighted_rho)) {
+            for (j in (i + 1):length(weighted_rho)) {
+                Lambda[i] <- Lambda[i] * (1 - (weighted_rho[j]^2))
+            }
         }
+        # for (j in (i + 1):length(weighted_rho)) {
+        #     Lambda[i] <- Lambda[i] * (1 - (weighted_rho[j]^2))
+        # }
         df[i] <- (ncol(myX) + 1 - i) * (ncol(myY) + 1 - i)
         ChiSq_Wilks_Lambda[i] <- (((nrow(myX) - 1) - 0.5 * (ncol(myX) + ncol(myY) + 1)) * log(Lambda[i])) * (-1)
         p_val_Wilks_Lambda[i] <- pchisq(ChiSq_Wilks_Lambda[i], df[i], lower.tail = FALSE)
@@ -190,8 +195,8 @@ cc <- cancor(cbind(Chins, Situps, Jumps) ~ Weight + Waist + Pulse, data = data, 
 
 csd <- csdcanon(as.matrix(data[, 1:3]), as.matrix(data[, 4:6]), data$Weight, cc$ndim, cc$coef$X, cc$coef$Y)
 
-print(csd$reg1)
-print(csd$reg2)
+# print(csd$reg1)
+# print(csd$reg2)
 print(csd$pvals$weighted_rho)
 print(csd$pvals$Lambda)
 print(csd$pvals$p_val_Wilks_Lambda)
