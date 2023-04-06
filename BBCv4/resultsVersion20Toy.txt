@@ -1,0 +1,91 @@
+
+.   canon (weight waist pulse) (chins situps jumps) [weight=weight]
+(analytic weights assumed)
+
+Canonical correlation analysis                      Number of obs =         20
+
+Raw coefficients for the first variable set
+
+                 |        1         2         3 
+    -------------+------------------------------
+          weight |   0.0300   -0.0792    0.0015 
+           waist |  -0.4564    0.4118   -0.1336 
+           pulse |   0.0124   -0.0125   -0.1498 
+    --------------------------------------------
+
+Raw coefficients for the second variable set
+
+                 |        1         2         3 
+    -------------+------------------------------
+           chins |   0.0710   -0.0438    0.2528 
+          situps |   0.0162   -0.0000   -0.0206 
+           jumps |  -0.0142    0.0223    0.0066 
+    --------------------------------------------
+
+----------------------------------------------------------------------------
+Canonical correlations:
+  0.8133  0.1938  0.0516
+
+----------------------------------------------------------------------------
+Tests of significance of all canonical correlations
+
+                         Statistic      df1      df2            F     Prob>F
+         Wilks' lambda     .325018        9  34.2229       2.2318     0.0440 a
+        Pillai's trace     .701606        9       48       1.6280     0.1341 a
+Lawley-Hotelling trace     1.99504        9       38       2.8078     0.0125 a
+    Roy's largest root     1.95337        3       16      10.4180     0.0005 u
+----------------------------------------------------------------------------
+                            e = exact, a = approximate, u = upper bound on F
+
+.   csdcanon "svyset  [pweight= weight],"
+
+Statistics for Canonical Correlation:  1
+
+--------------------------------------------------------------------------------------------
+  Canonical Correlation= .8141 |  Statistic         df1         df2    Chi-Sq/F       p-val 
+-------------------------------+------------------------------------------------------------
+                 Wilks' Lambda |     0.3235      9.0000           .     18.0667      0.0344 
+                Pillai's Trace |     0.7035      9.0000           .     13.0210      0.1617 
+        Hotelling-Lawley Trace |     2.0079      9.0000           .     27.1243      0.0013 
+           Roy's Greatest Root |     0.6628      3.0000     16.0000     10.4838      0.0005 
+             Wilks Lambda FREQ |     0.3235      9.0000           .   4026.6916      0.0000 
+                  Weighted Reg |     0.8133      1.0000     19.0000     14.1592      0.0013 
+     Complex Survey Design Reg |     0.8133      1.0000     19.0000     14.1592      0.0013 
+--------------------------------------------------------------------------------------------
+
+Statistics for Canonical Correlation:  2
+
+--------------------------------------------------------------------------------------------
+   Canonical Correlation= .195 |  Statistic         df1         df2    Chi-Sq/F       p-val 
+-------------------------------+------------------------------------------------------------
+                 Wilks' Lambda |     0.9594      4.0000           .      1.7116      0.7886 
+                Pillai's Trace |     0.0407      4.0000           .      1.7419      0.7831 
+        Hotelling-Lawley Trace |     0.0422      4.0000           .      1.6799      0.7944 
+           Roy's Greatest Root |     0.6628      2.0000     15.0000     14.7428      0.0003 
+             Wilks Lambda FREQ |     0.9594      4.0000           .    148.9048      0.0000 
+                  Weighted Reg |     0.1938      1.0000     19.0000      1.3608      0.2578 
+     Complex Survey Design Reg |     0.1938      1.0000     19.0000      1.3608      0.2578 
+--------------------------------------------------------------------------------------------
+
+Statistics for Canonical Correlation:  3
+
+--------------------------------------------------------------------------------------------
+  Canonical Correlation= .0516 |  Statistic         df1         df2    Chi-Sq/F       p-val 
+-------------------------------+------------------------------------------------------------
+                 Wilks' Lambda |     0.9973      1.0000           .      1.1088      0.2923 
+                Pillai's Trace |     0.0027      1.0000           .      1.1087      0.2924 
+        Hotelling-Lawley Trace |     0.0027      1.0000           .      1.1090      0.2923 
+           Roy's Greatest Root |     0.0380      2.0000     13.0000      0.2570      0.7772 
+             Wilks Lambda FREQ |     0.9973      1.0000           .     10.5837      0.0011 
+                  Weighted Reg |     0.0516      1.0000     19.0000      0.0596      0.8097 
+     Complex Survey Design Reg |     0.0516      1.0000     19.0000      0.0596      0.8097 
+--------------------------------------------------------------------------------------------
+
+.   /*
+>   canon (chins situps) (weight waist pulse)  [weight=weight]
+>   csdcanon "svyset  [pweight= weight],"
+>   */
+. 
+end of do-file
+
+. 

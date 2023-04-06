@@ -1,0 +1,288 @@
+
+.   replace qn9=0 if qn6 ==2  
+(16,547 real changes made)
+
+.   replace qn38=0 if qn35==2  
+(18,397 real changes made)
+
+.   replace qn40=0 if qn38==0  
+(19,622 real changes made)
+
+.   replace qn53=0 if qn51==2  
+(18,890 real changes made)
+
+.   replace qn54=0 if qn53==0  
+(19,561 real changes made)
+
+.   replace qn64=0 if qn62==2  
+(19,125 real changes made)
+
+.   replace qn69=0 if qn67==2  
+(19,151 real changes made)
+
+.   replace qn74=0 if qn73==2  
+(19,283 real changes made)
+
+.   replace qn76=0 if qn75==2  
+(19,453 real changes made)
+
+.   replace qn78=0 if qn77==2  
+(19,406 real changes made)
+
+.   replace qn80=0 if qn79==2  
+(19,534 real changes made)
+
+.   replace qn82=0 if qn81==2  
+(19,460 real changes made)
+
+.   replace qn85=0 if qn84==2  
+(18,218 real changes made)
+
+.   replace qn88=0 if qn87==2  
+(18,772 real changes made)
+
+.   replace qn89=0 if qn9==0 & qn38==0 & qn53==0 & qn64==0 & qn69==0 & qn74==0 & qn76==0 & qn78==0 & qn80==0 & qn82==0 & qn85==0 & qn88==0 
+(17,653 real changes made)
+
+.    
+. *E-cigarette TOBACCO MARKETING (excluding social media) vs. PERCEIVED ADDICTION RELATIVE TO CIGARETTES
+.  keep qn4a qn4b qn5b qn9 qn38 qn40 qn53 qn54 qn64 qn69 qn74 qn76 qn78 qn80 qn82 qn85 qn88 qn89 finwgt psu2 v_stratum2 qn128 qn129 qn130 qn131 qn132 qn134 
+
+.  *Getting rid of missing values in the dependent variables
+.   drop if qn9==. |  qn38==. |  qn40==. |  qn53==. |  qn54==. |  qn64==. |  qn69==. |  qn74==. |  qn76==. |  qn78==. |  qn80==. |  qn82==. |  qn85==. |  qn88==. |  qn89==.  
+(1,427 observations deleted)
+
+.  *Getting rid of missing values in the independent variables
+.   drop if  qn128==. |  qn129==. |  qn130==. |  qn131 ==. |   qn132==. |  qn134==.
+(2,883 observations deleted)
+
+.  
+.  /*Keeping only the persons who answers more than 0 for "QN89: During the past 30 days, on how many days did you use any tobacco product(s)?*/
+. *keep if qn89 > 0
+. /*Selecting people that uses at least 2 products*/
+. /*Notice qn40 is not in the list in email Wednesday, February 1, 2023 9:10 AM*/
+. gen      qn9bin=0 if qn9==0 
+(860 missing values generated)
+
+. replace  qn9bin=1 if qn9>0
+(860 real changes made)
+
+. gen      qn38bin=0 if qn38==0 
+(220 missing values generated)
+
+. replace  qn38bin=1 if qn38>0
+(220 real changes made)
+
+. gen      qn53bin=0 if qn53==0 
+(184 missing values generated)
+
+. replace  qn53bin=1 if qn53>0
+(184 real changes made)
+
+. gen      qn64bin=0 if qn64==0 
+(99 missing values generated)
+
+. replace  qn64bin=1 if qn64>0
+(99 real changes made)
+
+. gen      qn69bin=0 if qn69==0 
+(93 missing values generated)
+
+. replace  qn69bin=1 if qn69>0
+(93 real changes made)
+
+. gen      qn74bin=0 if qn74==0 
+(68 missing values generated)
+
+. replace  qn74bin=1 if qn74>0
+(68 real changes made)
+
+. gen      qn76bin=0 if qn76==0 
+(45 missing values generated)
+
+. replace  qn76bin=1 if qn76>0
+(45 real changes made)
+
+. gen      qn78bin=0 if qn78==0 
+(46 missing values generated)
+
+. replace  qn78bin=1 if qn78>0
+(46 real changes made)
+
+. gen      qn80bin=0 if qn80==0 
+(22 missing values generated)
+
+. replace  qn80bin=1 if qn80>0
+(22 real changes made)
+
+. gen      qn82bin=0 if qn82==0 
+(42 missing values generated)
+
+. replace  qn82bin=1 if qn82>0
+(42 real changes made)
+
+. gen      qn85bin=0 if qn85==0 
+(88 missing values generated)
+
+. replace  qn85bin=1 if qn85>0
+(88 real changes made)
+
+. gen      qn88bin=0 if qn88==0 
+(86 missing values generated)
+
+. replace  qn88bin=1 if qn88>0
+(86 real changes made)
+
+. 
+. gen number_of_products= qn9bin + qn38bin + qn53bin + qn64bin + qn69bin + qn74bin + qn76bin + qn78bin + qn80bin + qn82bin + qn85bin + qn88bin
+
+. * keep if number_of_products >= 4
+.  keep if qn5b==1
+(14,953 observations deleted)
+
+.  *outsheet using selectednyts2021.csv, comma 
+.  /*
+> QN128   Are using the Internet, how often do you see ads or promotions for e-cigarettes?
+> QN129   Read newspapers or magazines, how often do you see ads or promotions for e-cigarettes?
+> QN130   Go to a convenience store, supermarket, gas station, kiosk/storefront, or shopping center, how often do you see ads or promotions for e-cigarettes?
+> QN131   Watch T.V. or streaming services (such as Netflix, Hulu, or Amazon Prime), or go to the movies, how often do you see ads or promotions for e-cigarettes?
+> QN132   Watch T.V. or streaming services (such as Netflix, Hulu, or Amazon Prime), or go to the movies, how often do you see people or characters using e-cigarettes?
+> QN134   Use social media, how often do you see posts or content (pictures, videos, or text) related to e-cigarettes?
+> */
+.  canon (qn9 qn38 qn40 qn53 qn54 qn64 qn69 qn74 qn76 qn78 qn80 qn82 qn85 qn88 qn89) (qn128 qn129 qn130 qn131 qn132 qn134) [weight=finwgt]
+(analytic weights assumed)
+
+Canonical correlation analysis                      Number of obs =       1150
+
+Raw coefficients for the first variable set
+
+                 |        1         2         3         4         5         6 
+    -------------+------------------------------------------------------------
+             qn9 |  -0.1288    0.0723    0.3493   -0.3416    0.3559    0.5840 
+            qn38 |   3.0330   -5.1299   -1.2014   -4.1032   -1.2012   -1.6858 
+            qn40 |  -4.4884    7.0835    4.5750   10.2652    3.4092   -2.6987 
+            qn53 |   3.3551   -2.5205   -0.6950   -2.8340   -1.7706   -3.1491 
+            qn54 | -19.3886   28.3293    4.7526   22.0935   10.6266   15.6064 
+            qn64 |  -0.1159    0.5863    1.1594    3.4545   -1.2585   -0.2683 
+            qn69 |   0.3134  -11.7455   -3.3074   16.7327   -1.1657   15.0176 
+            qn74 |   5.5239   -1.0691   -0.3814    4.7404    7.5716    5.8958 
+            qn76 | -19.0665   60.9946   25.1156  -32.6883   -3.7654  -37.1978 
+            qn78 |   1.4113   -1.3128    0.7716   -7.8060    1.2710    1.6235 
+            qn80 |  26.7793  -69.9238  -28.7839    2.9077   -9.0414    2.5667 
+            qn82 | -15.5510   22.8622    8.2494   13.8847    6.1158   14.2269 
+            qn85 |   0.1432    0.6987   -0.3272   -0.1036   -0.1590    0.4199 
+            qn88 |  -1.1360   -0.4259   -1.9883   -0.4170    1.6487   -0.3330 
+            qn89 |   0.1233   -0.0586   -0.3432    0.2909   -0.2595   -0.6160 
+    --------------------------------------------------------------------------
+
+Raw coefficients for the second variable set
+
+                 |        1         2         3         4         5         6 
+    -------------+------------------------------------------------------------
+           qn128 |   0.7901   -0.6647    0.3891    0.1067    0.4952   -0.0160 
+           qn129 |  -0.1017   -0.2871   -0.6686    0.0084    0.0579    0.5550 
+           qn130 |   0.2470    0.5487   -0.4969    0.2336    0.2087   -0.3761 
+           qn131 |  -0.7259    0.0351    0.0635   -0.6944    0.6122   -0.2882 
+           qn132 |  -0.4384   -0.2083    0.2757    0.8841   -0.1195   -0.0401 
+           qn134 |   0.0334    0.5076    0.2917   -0.1144    0.0144    0.6260 
+    --------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+Canonical correlations:
+  0.1939  0.1741  0.1487  0.1186  0.1063  0.0876
+
+----------------------------------------------------------------------------
+Tests of significance of all canonical correlations
+
+                         Statistic      df1      df2            F     Prob>F
+         Wilks' lambda     .882761       90  6355.67       1.5834     0.0004 a
+        Pillai's trace     .123065       90     6804       1.5831     0.0004 a
+Lawley-Hotelling trace      .12637       90     6764       1.5829     0.0004 a
+    Roy's largest root     .039053       15     1134       2.9524     0.0001 u
+----------------------------------------------------------------------------
+                            e = exact, a = approximate, u = upper bound on F
+
+.  *canon (qn9 qn38 qn40 qn53 qn54 qn64 qn69 qn74 qn76 qn78 qn80 qn82 qn85 qn88 qn89) (qn128 qn131 qn132 qn134) [weight=finwgt]
+.   /*
+>   return list
+>   ereturn list
+>   sreturn list
+>   */
+.   *Double quotations must be used or the spaces will cut each pat of the svyset command into a different argument
+.  csdcanon "svyset [pweight=finwgt], psu(psu2) strata( v_stratum2)" 5
+
+Statistics for Canonical Correlation:  1
+
+--------------------------------------------------------------------------------------------
+  Canonical Correlation= .1914 |  Statistic         df1         df2    Chi-Sq/F       p-val 
+-------------------------------+------------------------------------------------------------
+                 Wilks' Lambda |     0.8840     90.0000           .    143.5827      0.0003 
+                Pillai's Trace |     0.1217     90.0000           .    142.9430      0.0003 
+        Hotelling-Lawley Trace |     0.1249     90.0000           .    144.2277      0.0003 
+           Roy's Greatest Root |     0.0366     15.0000   1134.0000      2.8747      0.0002 
+             Wilks Lambda FREQ |     0.8840     90.0000           .   2.247e+05      0.0000 
+                  Weighted Reg |     0.1939      1.0000   1149.0000      2.4595      0.1171 
+     Complex Survey Design Reg |     0.1939      1.0000     76.0000      2.2829      0.1350 
+--------------------------------------------------------------------------------------------
+
+Statistics for Canonical Correlation:  2
+
+--------------------------------------------------------------------------------------------
+   Canonical Correlation= .174 |  Statistic         df1         df2    Chi-Sq/F       p-val 
+-------------------------------+------------------------------------------------------------
+                 Wilks' Lambda |     0.9176     70.0000           .    102.8848      0.0064 
+                Pillai's Trace |     0.0851     70.0000           .    102.5656      0.0068 
+        Hotelling-Lawley Trace |     0.0869     70.0000           .    103.2055      0.0060 
+           Roy's Greatest Root |     0.0366     12.0000   1133.0000      3.5903      0.0000 
+             Wilks Lambda FREQ |     0.9176     70.0000           .   1.567e+05      0.0000 
+                  Weighted Reg |     0.1741      1.0000   1149.0000      3.6815      0.0553 
+     Complex Survey Design Reg |     0.1741      1.0000     76.0000      3.4799      0.0660 
+--------------------------------------------------------------------------------------------
+
+Statistics for Canonical Correlation:  3
+
+--------------------------------------------------------------------------------------------
+  Canonical Correlation= .1487 |  Statistic         df1         df2    Chi-Sq/F       p-val 
+-------------------------------+------------------------------------------------------------
+                 Wilks' Lambda |     0.9462     52.0000           .     68.5475      0.0617 
+                Pillai's Trace |     0.0548     52.0000           .     68.4412      0.0628 
+        Hotelling-Lawley Trace |     0.0557     52.0000           .     68.6533      0.0607 
+           Roy's Greatest Root |     0.0303     10.0000   1131.0000      3.5313      0.0001 
+             Wilks Lambda FREQ |     0.9462     52.0000           .   1.007e+05      0.0000 
+                  Weighted Reg |     0.1487      1.0000   1149.0000      4.1063      0.0430 
+     Complex Survey Design Reg |     0.1487      1.0000     76.0000      4.0880      0.0467 
+--------------------------------------------------------------------------------------------
+
+Statistics for Canonical Correlation:  4
+
+--------------------------------------------------------------------------------------------
+  Canonical Correlation= .1186 |  Statistic         df1         df2    Chi-Sq/F       p-val 
+-------------------------------+------------------------------------------------------------
+                 Wilks' Lambda |     0.9676     36.0000           .     43.1231      0.1929 
+                Pillai's Trace |     0.0327     36.0000           .     43.1015      0.1935 
+        Hotelling-Lawley Trace |     0.0331     36.0000           .     43.1441      0.1923 
+           Roy's Greatest Root |     0.0221      8.0000   1129.0000      3.1901      0.0014 
+             Wilks Lambda FREQ |     0.9676     36.0000           .  59955.1936      0.0000 
+                  Weighted Reg |     0.1186      1.0000   1149.0000      5.6073      0.0181 
+     Complex Survey Design Reg |     0.1186      1.0000     76.0000      5.5217      0.0214 
+--------------------------------------------------------------------------------------------
+
+Statistics for Canonical Correlation:  5
+
+--------------------------------------------------------------------------------------------
+  Canonical Correlation= .1062 |  Statistic         df1         df2    Chi-Sq/F       p-val 
+-------------------------------+------------------------------------------------------------
+                 Wilks' Lambda |     0.9814     22.0000           .     26.1967      0.2433 
+                Pillai's Trace |     0.0186     22.0000           .     26.1809      0.2440 
+        Hotelling-Lawley Trace |     0.0188     22.0000           .     26.2124      0.2427 
+           Roy's Greatest Root |     0.0141      6.0000   1127.0000      2.6802      0.0138 
+             Wilks Lambda FREQ |     0.9814     22.0000           .  34139.5358      0.0000 
+                  Weighted Reg |     0.1063      1.0000   1149.0000      5.4921      0.0193 
+     Complex Survey Design Reg |     0.1063      1.0000     76.0000      5.2254      0.0250 
+--------------------------------------------------------------------------------------------
+
+.  *csdcanon "svyset [pweight=finwgt], psu(psu2) strata( v_stratum2)"
+. 
+end of do-file
+
+. 
