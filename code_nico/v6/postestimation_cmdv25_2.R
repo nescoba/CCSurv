@@ -11,7 +11,10 @@ plot_canon <- function(cc_object, dim1, dim2) {
     stdV <- cc_object$Y %*% mycoef2
 
     graphcoef <- rbind(mycoef1, mycoef2)
-    graphcoef <- cbind(graphcoef, c(rep(0, length(mycoef1)), rep(1, length(mycoef2))))
+
+    print(graphcoef)
+
+    graphcoef <- cbind(graphcoef, c(rep(0, ncol(mycoef1)), rep(1, ncol(mycoef2))))
 
     # grid for two plots
     par(mfrow = c(1, 2))
@@ -19,22 +22,21 @@ plot_canon <- function(cc_object, dim1, dim2) {
     # plot a unit circle
     x <- seq(-1, 1, length = 100)
     y <- sqrt(1 - x^2)
-    plot(x, y, type = "l", xlab = "", ylab = "", lty = 2, xlim = c(-2, 2), ylim = c(-2, 2))
+    plot(x, y, type = "l", xlab = paste0("CC", dim1), ylab = paste0("CC", dim2), lty = 2, xlim = c(-2, 2), ylim = c(-2, 2))
     lines(x, -y, lty = 2)
 
     points(
-        graphcoef[, dim2], graphcoef[, dim1],
-        col = ifelse(graphcoef[, ncol(graphcoef) - 1] == 0, "red", "blue"),
-        pch = ifelse(graphcoef[, ncol(graphcoef) - 1], 22, 4), xlab = paste0("CC", dim1),
-        ylab = paste0("CC", dim2)
+        graphcoef[, dim1], graphcoef[, dim2],
+        col = ifelse(graphcoef[, ncol(graphcoef)] == 0, "red", "blue"),
+        pch = ifelse(graphcoef[, ncol(graphcoef)] == 0, 1, 3)
     )
     text(
-        graphcoef[, dim2], graphcoef[, dim1],
+        graphcoef[, dim1], graphcoef[, dim2],
         labels = c(cc_object$names$X, cc_object$names$Y)
     )
 
-    stdV_dim1 <- stdV[dim1, ]
-    stdU_dim1 <- stdU[dim1, ]
+    stdV_dim1 <- stdV[, dim1]
+    stdU_dim1 <- stdU[, dim1]
 
     plot(stdU_dim1, stdV_dim1, xlab = paste0("U", dim1), ylab = paste0("V", dim1))
     text(stdU_dim1, stdV_dim1, labels = 1:length(stdU_dim1))
@@ -90,21 +92,22 @@ csdcanon <- function(cc_object, howmany = NA, dim1, dim2, selection, command = "
             p1 <- coef(summary(svyreg1))[1, 4]
 
             svyreg2 <- svyglm(as.formula(paste(names_OGStataUVW[secondindex], "~", names_OGStataUVW[i])), design = design_object)
-            p2 <- coef(summary(svyreg1))[1, 4]
+            p2 <- coef(summary(svyreg2))[1, 4]
 
             if (p1 >= p2) {
-                Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg1))[1, 1]
+                Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg1))[2, 1]
                 Results[(7 * (i - 1)) + 6, 2] <- svyreg1$df.residual + length(svyreg1$coefficients) - 1
                 Results[(7 * (i - 1)) + 6, 3] <- svyreg1$df.null - svyreg1$df.residual
-                aux <- summary(svyreg1)$coefficients[, 1]
-                Results[(7 * (i - 1)) + 6, 4] <- aux[1]
+                aux <- summary(svyreg1)$coefficients[, 3]
+                Results[(7 * (i - 1)) + 6, 4] <- aux[2]
                 Results[(7 * (i - 1)) + 6, 5] <- summary(svyreg1)$coef[2, 4]
                 Results[(7 * (i - 1)) + 6, 6] <- i
             } else {
-                Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg2))[1, 1]
+                Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg2))[2, 1]
                 Results[(7 * (i - 1)) + 6, 2] <- svyreg2$df.residual + length(svyreg2$coefficients) - 1
                 Results[(7 * (i - 1)) + 6, 3] <- svyreg2$df.null - svyreg2$df.residual
-                Results[(7 * (i - 1)) + 6, 4] <- summary(svyreg2)$fstatistic[1]
+                aux <- summary(svyreg2)$coefficients[, 3]
+                Results[(7 * (i - 1)) + 6, 4] <- aux[2]
                 Results[(7 * (i - 1)) + 6, 5] <- summary(svyreg2)$coef[2, 4]
                 Results[(7 * (i - 1)) + 6, 6] <- i
             }
@@ -116,7 +119,7 @@ csdcanon <- function(cc_object, howmany = NA, dim1, dim2, selection, command = "
             svyreg1 <- svyglm(as.formula(paste(names_OGStataUVW[i], "~", names_OGStataUVW[secondindex])), design = design_object)
             p1 <- coef(summary(svyreg))[1, 4]
 
-            Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg1))[1, 1]
+            Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg1))[2, 1]
             Results[(7 * (i - 1)) + 6, 2] <- svyreg1$df.residual + length(svyreg1$coefficients) - 1
             Results[(7 * (i - 1)) + 6, 3] <- svyreg1$df.null - svyreg1$df.residual
             aux <- summary(svyreg1)$coefficients[, 1]
@@ -127,42 +130,42 @@ csdcanon <- function(cc_object, howmany = NA, dim1, dim2, selection, command = "
         }
     }
 
-    if (command != "classic") {
-        design_object <- svydesign(ids = ~1, weights = ~ OGStataUVW[, weightindex], data = OGStataUVW)
-        # svyset(pweight = paste0("OGStataUVW", weightindex))
+    # if (command != "classic") {
+    #     design_object <- svydesign(ids = ~1, weights = ~ OGStataUVW[, weightindex], data = OGStataUVW)
+    #     # svyset(pweight = paste0("OGStataUVW", weightindex))
 
-        # Notice coefficients of the simple linear regression are equal to the canonical correlations because the variances of the canonical variates are equal to 1
-        for (i in 1:n_cc) {
-            secondindex <- i + n_cc
-            svyreg1 <- svyglm(as.formula(paste(names_OGStataUVW[i], "~", names_OGStataUVW[secondindex])), design = design_object)
-            p1 <- coef(summary(svyreg1))[1, 4]
+    #     # Notice coefficients of the simple linear regression are equal to the canonical correlations because the variances of the canonical variates are equal to 1
+    #     for (i in 1:n_cc) {
+    #         secondindex <- i + n_cc
+    #         svyreg1 <- svyglm(as.formula(paste(names_OGStataUVW[i], "~", names_OGStataUVW[secondindex])), design = design_object)
+    #         p1 <- coef(summary(svyreg1))[1, 4]
 
-            svyreg2 <- svyglm(as.formula(paste(names_OGStataUVW[secondindex], "~", names_OGStataUVW[i])), design = design_object)
-            p2 <- coef(summary(svyreg1))[1, 4]
+    #         svyreg2 <- svyglm(as.formula(paste(names_OGStataUVW[secondindex], "~", names_OGStataUVW[i])), design = design_object)
+    #         p2 <- coef(summary(svyreg1))[1, 4]
 
-            if (p1 >= p2) {
-                Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg1))[1, 1]
-                Results[(7 * (i - 1)) + 6, 2] <- svyreg1$df.residual + length(svyreg1$coefficients) - 1
-                Results[(7 * (i - 1)) + 6, 3] <- svyreg1$df.null - svyreg1$df.residual
+    #         if (p1 >= p2) {
+    #             Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg1))[1, 1]
+    #             Results[(7 * (i - 1)) + 6, 2] <- svyreg1$df.residual + length(svyreg1$coefficients) - 1
+    #             Results[(7 * (i - 1)) + 6, 3] <- svyreg1$df.null - svyreg1$df.residual
 
-                aux <- summary(svyreg1)$coefficients[, 1]
-                Results[(7 * (i - 1)) + 6, 4] <- aux[1]
+    #             aux <- summary(svyreg1)$coefficients[, 1]
+    #             Results[(7 * (i - 1)) + 6, 4] <- aux[1]
 
-                # Results[(7 * (i - 1)) + 6, 4] <- summary(svyreg1)$fstatistic[1]
-                Results[(7 * (i - 1)) + 6, 5] <- summary(svyreg1)$coef[2, 4]
-                Results[(7 * (i - 1)) + 6, 6] <- i
-            } else {
-                Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg2))[1, 1]
-                Results[(7 * (i - 1)) + 6, 2] <- svyreg2$df.residual + length(svyreg2$coefficients) - 1
-                Results[(7 * (i - 1)) + 6, 3] <- svyreg2$df.null - svyreg2$df.residual
-                aux <- summary(svyreg1)$coefficients[, 1]
-                Results[(7 * (i - 1)) + 6, 4] <- aux[1]
-                # Results[(7 * (i - 1)) + 6, 4] <- summary(svyreg2)$fstatistic[1]
-                Results[(7 * (i - 1)) + 6, 5] <- summary(svyreg2)$coef[2, 4]
-                Results[(7 * (i - 1)) + 6, 6] <- i
-            }
-        }
-    }
+    #             # Results[(7 * (i - 1)) + 6, 4] <- summary(svyreg1)$fstatistic[1]
+    #             Results[(7 * (i - 1)) + 6, 5] <- summary(svyreg1)$coef[2, 4]
+    #             Results[(7 * (i - 1)) + 6, 6] <- i
+    #         } else {
+    #             Results[(7 * (i - 1)) + 6, 1] <- coef(summary(svyreg2))[1, 1]
+    #             Results[(7 * (i - 1)) + 6, 2] <- svyreg2$df.residual + length(svyreg2$coefficients) - 1
+    #             Results[(7 * (i - 1)) + 6, 3] <- svyreg2$df.null - svyreg2$df.residual
+    #             aux <- summary(svyreg1)$coefficients[, 1]
+    #             Results[(7 * (i - 1)) + 6, 4] <- aux[1]
+    #             # Results[(7 * (i - 1)) + 6, 4] <- summary(svyreg2)$fstatistic[1]
+    #             Results[(7 * (i - 1)) + 6, 5] <- summary(svyreg2)$coef[2, 4]
+    #             Results[(7 * (i - 1)) + 6, 6] <- i
+    #         }
+    #     }
+    # }
 
     if (is.null(howmany)) {
         howmany <- n_cc
@@ -294,8 +297,8 @@ calcpval <- function(cc_object, selection, OgX, OgY, diag_W) {
         myResults[(7 * (j - 1)) + 4, 5] <- Hotelling_Lawley_Trace_p_value[j]
     }
 
-    p <- ncol(OgX)
-    q <- ncol(OgY)
+    q <- ncol(OgX)
+    p <- ncol(OgY)
     largest_root <- rep(1, length(weighted_rho))
     v1 <- rep(1, length(weighted_rho))
     v2 <- rep(1, length(weighted_rho))
@@ -345,10 +348,10 @@ calcpval <- function(cc_object, selection, OgX, OgY, diag_W) {
 }
 
 
-# data <- read.csv("BCC/toy/fit.csv")
-# cc <- cancor(cbind(Chins, Situps, Jumps) ~ Weight + Waist + Pulse, data = data, weights = Weight)
+data <- read.csv("BCC/toy/fit.csv")
+cc <- cancor(cbind(Chins, Situps, Jumps) ~ Weight + Waist + Pulse, data = data, weights = Weight)
 
-# Results <- csdcanon(cc_object = cc, howmany = 2, dim1 = 1, dim2 = 2, selection = "FREQ", cc$ndim, cc$coef$X, cc$coef$Y)
+csdcanon(cc_object = cc, howmany = 2, dim1 = 1, dim2 = 2, selection = "FREQ", cc$ndim, cc$coef$X, cc$coef$Y)
 
 # stargazer(Results,
 #     title = "Complete List of Canonical Correlation p-values", type = "text"
